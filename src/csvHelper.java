@@ -12,8 +12,10 @@ public class csvHelper {
 
     public void reader() {
 
-
+        //recibirla por program arguments
+        //new FileReader(src/main/resources/x.csv)
         ///Users/lfelici/Downloads/products.csv
+        //Path filePath = Paths.get("C:/Users/Lucas/Downloads/products.csv");
         Path filePath = Paths.get("/Users/lfelici/Downloads/products.csv");
 
         try {
