@@ -1,4 +1,4 @@
-package Model;
+package entities;
 
 public class Products {
     String product_ID;

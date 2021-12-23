@@ -1,4 +1,4 @@
-package Model;
+package entities;
 
 public class Orders {
     String order_id;

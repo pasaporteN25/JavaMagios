@@ -1,4 +1,4 @@
-package Model;
+package entities;
 
 public class Sales {
     String sales_id;
