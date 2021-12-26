@@ -17,13 +17,20 @@ public class Main {
         JDBCaoImp sql1 = new JDBCaoImp();
 
         System.out.println("Ingrese items:");
-        ArrayList<Products> products = new ArrayList<>();
-        Products ingreso = new Products("remera","gucci especial","XL"
+/*        ArrayList<Products> products = new ArrayList<>();
+        Products ingreso = new Products("remera","gucci especial","L"
                 ,"rojo",24.0f,24,"aa");
-        products.add(ingreso);
-        sql1.setProducts(products);
+        Products ingreso2 = new Products("pantalon","prada","L"
+                ,"jean",240.0f,60,"aa");
 
+        products.add(ingreso);
+        products.add(ingreso2);
+        sql1.setProducts(products);
+*/
         sql1.getProducts();
 
+        sql1.updateProduct("colour","gris",1);
+
+        sql1.getProducts();
     }
 }

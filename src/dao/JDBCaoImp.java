@@ -1,5 +1,6 @@
 package dao;
 
+import com.google.protobuf.Any;
 import entities.Products;
 import helpers.JDBCHelper;
 
@@ -62,9 +63,16 @@ public class JDBCaoImp {
 
     }
 
-    public void updateProduct(){
+    public void updateProduct(String campo, Object valor, Integer id){
+        String sqlUpdate = "UPDATE products SET "+ campo + " = " + valor + " WHERE id = " + id;
+        try(Connection conn = JDBCHelper.getConnection();
+            Statement st = conn.createStatement()) {
+            st.executeUpdate(sqlUpdate);
+        }catch (SQLException e ){
+            e.printStackTrace();
+        }
 
-    }
+        }
 
     public void deleteProduct(){
 
