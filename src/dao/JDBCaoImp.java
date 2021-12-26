@@ -38,15 +38,16 @@ public class JDBCaoImp {
             Statement st = conn.createStatement()){
 
             for (Products product : dataIn){
-                String sql= "INSERT INTO products VALUES ( " +
-                        product.getProduct_ID() + ", " +
-                        product.getProduct_type() + ", " +
-                        product.getProduct_name() + ", " +
-                        product.getSize() + ", " +
-                        product.getColour() + ", " +
+                String sql= "INSERT INTO products(" +
+                        "product_type,product_name,size,colour,price,quantity,description" +
+                        ") VALUES ('" +
+                        product.getProduct_type() + "', '" +
+                        product.getProduct_name() + "', '" +
+                        product.getSize() + "', '" +
+                        product.getColour() + "', " +
                         product.getPrice() + ", " +
-                        product.getQuantity() + ", " +
-                        product.getDescription() + " )";
+                        product.getQuantity() + ", '" +
+                        product.getDescription() + "')";
 
                 st.executeUpdate(sql);
                 System.out.println("Insertado con exito!");

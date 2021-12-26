@@ -19,7 +19,7 @@ public class Main {
         System.out.println("Ingrese items:");
         ArrayList<Products> products = new ArrayList<>();
         Products ingreso = new Products("remera","gucci especial","XL"
-                ,"rojo",24.0f,24,"");
+                ,"rojo",24.0f,24,"aa");
         products.add(ingreso);
         sql1.setProducts(products);
 
