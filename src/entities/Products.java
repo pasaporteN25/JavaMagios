@@ -1,7 +1,7 @@
 package entities;
 
 public class Products {
-    String product_ID;
+    Integer product_ID;
     String product_type;
     String product_name;
     String size;
@@ -10,11 +10,11 @@ public class Products {
     String quantity;
     String description;
 
-    public String getProduct_ID() {
+    public Integer getProduct_ID() {
         return product_ID;
     }
 
-    public void setProduct_ID(String product_ID) {
+    public void setProduct_ID(Integer product_ID) {
         this.product_ID = product_ID;
     }
 
