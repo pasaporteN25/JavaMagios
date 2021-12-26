@@ -29,7 +29,7 @@ public class Main {
 */
         sql1.getProducts();
 
-        sql1.updateProduct("colour","gris",1);
+        sql1.updateProduct("product_name","gucci 2C",1);
 
         sql1.getProducts();
     }

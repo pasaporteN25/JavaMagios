@@ -64,10 +64,11 @@ public class JDBCaoImp {
     }
 
     public void updateProduct(String campo, Object valor, Integer id){
-        String sqlUpdate = "UPDATE products SET "+ campo + " = " + valor + " WHERE id = " + id;
+        String sqlUpdate = "UPDATE products SET "+ campo + " = '" + valor + "' WHERE product_ID = " + id;
         try(Connection conn = JDBCHelper.getConnection();
             Statement st = conn.createStatement()) {
             st.executeUpdate(sqlUpdate);
+            System.out.println("Update Successfull");
         }catch (SQLException e ){
             e.printStackTrace();
         }
