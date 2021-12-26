@@ -6,9 +6,29 @@ public class Products {
     String product_name;
     String size;
     String colour;
-    String price;
-    String quantity;
+    Float price;
+    Integer quantity;
     String description;
+
+    public Products(){}
+
+    public Products(
+            String newProduct_type,
+            String newProduct_name,
+            String newSize,
+            String newColour,
+            Float newPrice,
+            Integer newQuantity,
+            String newDescription
+    ){
+        product_type=newProduct_type;
+        product_name=newProduct_name;
+        size=newSize;
+        colour=newColour;
+        price=newPrice;
+        quantity=newQuantity;
+        description=newDescription;
+    }
 
     public Integer getProduct_ID() {
         return product_ID;
@@ -50,19 +70,19 @@ public class Products {
         this.colour = colour;
     }
 
-    public String getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 
-    public String getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(String quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 

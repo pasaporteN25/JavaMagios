@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class JDBCaoImp {
 
@@ -29,5 +30,42 @@ public class JDBCaoImp {
             e.printStackTrace();
         }
         return products;
+    }
+
+    public void setProducts(ArrayList<Products> dataIn){
+        //quiza pueda retornar un boolean
+        try(Connection conn = JDBCHelper.getConnection();
+            Statement st = conn.createStatement()){
+
+            for (Products product : dataIn){
+                String sql= "INSERT INTO products VALUES ( " +
+                        product.getProduct_ID() + ", " +
+                        product.getProduct_type() + ", " +
+                        product.getProduct_name() + ", " +
+                        product.getSize() + ", " +
+                        product.getColour() + ", " +
+                        product.getPrice() + ", " +
+                        product.getQuantity() + ", " +
+                        product.getDescription() + " )";
+
+                st.executeUpdate(sql);
+                System.out.println("Insertado con exito!");
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public void searchProducts(){
+
+    }
+
+    public void updateProduct(){
+
+    }
+
+    public void deleteProduct(){
+
     }
 }
