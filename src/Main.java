@@ -44,9 +44,10 @@ public class Main {
         //Tengo que mejorar el switch, no deberia estar aca y las opciones se deberian modificar
 
         randomBuyers compra1 = new randomBuyers();
+        System.out.println(compra1.pedidoRopa());
+        System.out.println(compra1.pedidoRopa());
 
-        System.out.println(compra1.pedidoRopa());
-        System.out.println(compra1.pedidoRopa());
+        //DB operations:
 //        sql1.getProducts();
 
 //        sql1.updateProduct("product_name","gucci 2C",1);

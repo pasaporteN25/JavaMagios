@@ -59,7 +59,35 @@ public class JDBCaoImp {
 
     }
 
-    public void searchProducts(){
+    public ArrayList<Products> searchProducts(String pName){
+
+        ArrayList<Products> pList = new ArrayList<>();
+
+        try (Connection conn = JDBCHelper.getConnection();
+             Statement st = conn.createStatement();
+             ResultSet rs = st.executeQuery("SELECT * FROM products WHERE product_name = "+pName)) {
+
+            while (rs.next()){
+                Products productFind = new Products();
+                productFind.setProduct_ID(rs.getInt("product_ID"));
+                productFind.setProduct_type(rs.getString("product_type"));
+                productFind.setProduct_name(rs.getString("product_name"));
+                productFind.setSize(rs.getString("size"));
+                productFind.setColour(rs.getString("colour"));
+                productFind.setPrice(rs.getFloat("price"));
+                productFind.setQuantity(rs.getInt("quantity"));
+                productFind.setDescription(rs.getString("description"));
+
+                pList.add(productFind);
+            }
+            if(pList.size() != 0){
+                System.out.println("Coincidencias en la busqueda: "+pList.size());
+            }
+
+        }catch (SQLException e ){
+            e.printStackTrace();
+        }
+        return pList;
 
     }
 
