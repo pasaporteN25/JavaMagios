@@ -81,6 +81,7 @@ public class JDBCHelper {
         }else if (paramSearch instanceof Integer){
             rowToSearch="product_ID";
         }else {
+            System.out.println("malio sal");
             //Manejar si no es lo que espero!
             rowToSearch="";
         }
@@ -88,7 +89,7 @@ public class JDBCHelper {
 
         try (Connection conn = JDBCImp.getConnection();
              Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery("SELECT * FROM products WHERE '"+rowToSearch+"' LIKE'%"+paramSearch+"%'")) {
+             ResultSet rs = st.executeQuery("SELECT * FROM products WHERE "+rowToSearch+" LIKE'%"+paramSearch+"%'")) {
 
             while (rs.next()){
                 Products productFind = new Products();
@@ -138,7 +139,7 @@ public class JDBCHelper {
 
         try (Connection conn = JDBCImp.getConnection();
              Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery("SELECT * FROM products")) {
+             ResultSet rs = st.executeQuery("SELECT * FROM customers")) {
 
             while (rs.next()){
                 //Esto se deberia pasar al cui

@@ -34,7 +34,8 @@ public class randomBuyers {
 
         ConnectionUrlParser.Pair<Integer,Integer> randomPair = pedidoRopa();
         JDBCHelper sql = new JDBCHelper();
-        ArrayList<Products> product = sql.searchProducts(randomPair.right);
+        System.out.println(randomPair.right);
+        ArrayList<Products> product = sql.searchProducts(2);//randomPair.right
         System.out.println("Pedido de "+randomPair.left+" "+product.get(0).getProduct_name());
         //System.out.println(product.get(0).getProduct_ID());
 
