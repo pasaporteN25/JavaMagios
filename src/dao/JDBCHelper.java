@@ -1,9 +1,8 @@
 package dao;
 
-import com.google.protobuf.Any;
 import entities.Customers;
 import entities.Products;
-import helpers.JDBCHelper;
+import helpers.JDBCImp;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -11,13 +10,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class JDBCaoImp {
+public class JDBCHelper {
 
     public ArrayList<Products> getProducts(){
         ArrayList<Products> prodList = new ArrayList<>();
         Products products = new Products();
 
-        try (Connection conn = JDBCHelper.getConnection();
+        try (Connection conn = JDBCImp.getConnection();
              Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery("SELECT * FROM products")) {
 
@@ -45,7 +44,7 @@ public class JDBCaoImp {
 
     public void setProducts(ArrayList<Products> dataIn){
         //quiza pueda retornar un boolean
-        try(Connection conn = JDBCHelper.getConnection();
+        try(Connection conn = JDBCImp.getConnection();
             Statement st = conn.createStatement()){
 
             for (Products product : dataIn){
@@ -72,13 +71,24 @@ public class JDBCaoImp {
     }
 
     //Podria buscar por otros parametros pero por ahora solo nombre
-    public ArrayList<Products> searchProducts(String pName){
+    public ArrayList<Products> searchProducts(Object paramSearch){
 
+        String rowToSearch;
+        //Tengo que modificarlo para traer por id!
+
+        if(paramSearch instanceof String){
+            rowToSearch="product_name";
+        }else if (paramSearch instanceof Integer){
+            rowToSearch="product_ID";
+        }else {
+            //Manejar si no es lo que espero!
+            rowToSearch="";
+        }
         ArrayList<Products> pList = new ArrayList<>();
 
-        try (Connection conn = JDBCHelper.getConnection();
+        try (Connection conn = JDBCImp.getConnection();
              Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery("SELECT * FROM products WHERE product_name LIKE'%"+pName+"%'")) {
+             ResultSet rs = st.executeQuery("SELECT * FROM products WHERE '"+rowToSearch+"' LIKE'%"+paramSearch+"%'")) {
 
             while (rs.next()){
                 Products productFind = new Products();
@@ -105,7 +115,7 @@ public class JDBCaoImp {
 
     public void updateProduct(String campo, Object valor, Integer id){
         String sqlUpdate = "UPDATE products SET "+ campo + " = '" + valor + "' WHERE product_ID = " + id;
-        try(Connection conn = JDBCHelper.getConnection();
+        try(Connection conn = JDBCImp.getConnection();
             Statement st = conn.createStatement()) {
             st.executeUpdate(sqlUpdate);
             System.out.println("Update Successfull");
@@ -126,7 +136,7 @@ public class JDBCaoImp {
         ArrayList<Customers> custList = new ArrayList<>();
         Customers customers = new Customers();
 
-        try (Connection conn = JDBCHelper.getConnection();
+        try (Connection conn = JDBCImp.getConnection();
              Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery("SELECT * FROM products")) {
 

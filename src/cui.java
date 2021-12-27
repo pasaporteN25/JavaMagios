@@ -1,4 +1,4 @@
-import dao.JDBCaoImp;
+import dao.JDBCHelper;
 import entities.Products;
 
 import java.util.ArrayList;
@@ -7,7 +7,8 @@ import java.util.Scanner;
 public class cui {
 
     Scanner in = new Scanner(System.in);
-    String option = in.nextLine();
+    String option;
+    JDBCHelper sqlHelper = new JDBCHelper();
 
     public void welcomeScreen(){
         System.out.println("Bienvenido a su gestor de Stock");
@@ -17,6 +18,7 @@ public class cui {
         System.out.println("3. Control de Stock");
         System.out.println("4. Resumen del dia");
         System.out.println("5. Salir");
+        option = in.nextLine();
 
         switch (option){
             case "1" -> dbScreen();
@@ -29,6 +31,45 @@ public class cui {
     }
 
     public void dbScreen(){
+        System.out.println("DB Controller Room");
+        System.out.println("------------------");
+        System.out.println("1. Productos");
+        System.out.println("2. Clientes");
+        System.out.println("3. Atras");
+
+        option = in.nextLine();
+        switch (option){
+            case "1" ->dbProdScreen();
+            case "2" ->dbCustScreen();
+            case "3" ->welcomeScreen();
+            default -> throw new IllegalStateException("Unexpected value: " + option);
+        }
+    }
+
+    //Esta quiza se puede mejorar uniendola con prod
+    public void dbCustScreen(){
+        System.out.println("DB Controller");
+        System.out.println("-------------");
+        System.out.println("1. Ver clientes");
+        System.out.println("2. Buscar en clientes");
+        System.out.println("3. Insertar clientes");
+        System.out.println("4. Modificar cliente");
+        System.out.println("5. Eliminar cliente");
+        System.out.println("6. Atras");
+
+        option = in.nextLine();
+        switch (option){
+            case "1" ->sqlHelper.getCustomers();
+            case "2" ->{}
+            case "3" ->{}
+            case "4" ->{}
+            case "5" ->{}
+            case "6" ->welcomeScreen();
+            default -> throw new IllegalStateException("Unexpected value: " + option);
+        }
+    }
+
+    public void dbProdScreen(){
         System.out.println("DB Controller");
         System.out.println("-------------");
         System.out.println("1. Ver productos y stock");
@@ -37,7 +78,6 @@ public class cui {
         System.out.println("4. Modificar entrada");
         System.out.println("5. Eliminar producto");
         System.out.println("6. Atras");
-        JDBCaoImp sqlHelper = new JDBCaoImp();
 
 
         switch (option) {
@@ -96,7 +136,7 @@ public class cui {
                 sqlHelper.deleteProduct();
                 System.out.println("Segui esperando..");
             }
-            case "6" -> welcomeScreen();
+            case "6" -> dbScreen();
             default -> throw new IllegalStateException("Unexpected value: " + option);
         }
     }

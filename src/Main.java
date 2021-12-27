@@ -1,6 +1,5 @@
-import dao.JDBCaoImp;
-import entities.Products;
-import helpers.JDBCHelper;
+import dao.JDBCHelper;
+
 import java.util.Scanner;
 
 public class Main {
@@ -9,7 +8,7 @@ public class Main {
         //csvHelper csvhelper = new csvHelper();
         //csvhelper.reader();
 
-        JDBCaoImp sql1 = new JDBCaoImp();
+        JDBCHelper sql1 = new JDBCHelper();
         Scanner in = new Scanner(System.in);
         cui consola = new cui();
 
