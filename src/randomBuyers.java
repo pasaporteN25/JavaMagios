@@ -1,5 +1,5 @@
 import com.mysql.cj.conf.ConnectionUrlParser;
-import dao.JDBCHelper;
+import helpers.JDBCHelper;
 import entities.Products;
 
 import java.util.ArrayList;
@@ -35,8 +35,8 @@ public class randomBuyers {
         ConnectionUrlParser.Pair<Integer,Integer> randomPair = pedidoRopa();
         JDBCHelper sql = new JDBCHelper();
         System.out.println(randomPair.right);
-        ArrayList<Products> product = sql.searchProducts(2);//randomPair.right
-        System.out.println("Pedido de "+randomPair.left+" "+product.get(0).getProduct_name());
+        ArrayList<Products> product = sql.searchProducts(randomPair.right);
+        System.out.println("Nuevo pedido de "+randomPair.left+" "+product.get(0).getProduct_name());
         //System.out.println(product.get(0).getProduct_ID());
 
         if(randomPair.left > product.get(0).getQuantity()){
