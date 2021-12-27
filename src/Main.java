@@ -45,7 +45,13 @@ public class Main {
 
         randomBuyers compra1 = new randomBuyers();
         System.out.println(compra1.pedidoRopa());
-        System.out.println(compra1.pedidoRopa());
+        System.out.println("Item quantity: "+compra1.pedidoRopa().left
+                +" | Item id: "+compra1.pedidoRopa().right);
+
+        ArrayList<Products> resul = sql1.searchProducts("gucci");
+        for(Products prod : resul){
+            System.out.println(prod.getProduct_name()+" | "+prod.getProduct_type());
+        }
 
         //DB operations:
 //        sql1.getProducts();

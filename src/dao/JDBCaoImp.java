@@ -59,13 +59,14 @@ public class JDBCaoImp {
 
     }
 
+    //Podria buscar por otros parametros pero por ahora solo nombre
     public ArrayList<Products> searchProducts(String pName){
 
         ArrayList<Products> pList = new ArrayList<>();
 
         try (Connection conn = JDBCHelper.getConnection();
              Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery("SELECT * FROM products WHERE product_name = "+pName)) {
+             ResultSet rs = st.executeQuery("SELECT * FROM products WHERE product_name LIKE'%"+pName+"%'")) {
 
             while (rs.next()){
                 Products productFind = new Products();
