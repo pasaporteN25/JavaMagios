@@ -1,6 +1,7 @@
 package dao;
 
 import com.google.protobuf.Any;
+import entities.Customers;
 import entities.Products;
 import helpers.JDBCHelper;
 
@@ -12,7 +13,8 @@ import java.util.ArrayList;
 
 public class JDBCaoImp {
 
-    public Products getProducts(){
+    public ArrayList<Products> getProducts(){
+        ArrayList<Products> prodList = new ArrayList<>();
         Products products = new Products();
 
         try (Connection conn = JDBCHelper.getConnection();
@@ -20,17 +22,26 @@ public class JDBCaoImp {
              ResultSet rs = st.executeQuery("SELECT * FROM products")) {
 
             while (rs.next()){
+                //Esto se va al cui
                 System.out.println("ID: " + rs.getInt("product_ID"));
                 System.out.println("Nombre: " + rs.getString("product_name"));
+                //
                 products.setProduct_ID(rs.getInt("product_ID"));
+                products.setProduct_type(rs.getString("product_type"));
                 products.setProduct_name(rs.getString("product_name"));
+                products.setSize(rs.getString("size"));
+                products.setColour(rs.getString("colour"));
+                products.setPrice(rs.getFloat("price"));
+                products.setQuantity(rs.getInt("quantity"));
+                products.setDescription(rs.getString("description"));
+                prodList.add(products);
             }
 
 
         }catch (SQLException e ){
             e.printStackTrace();
         }
-        return products;
+        return prodList;
     }
 
     public void setProducts(ArrayList<Products> dataIn){
@@ -107,4 +118,40 @@ public class JDBCaoImp {
     public void deleteProduct(){
 
     }
+
+    //customer_id,customer_name,gender,age,home_address,zip_code,city,state,country
+    //
+    //Customers:
+    public ArrayList<Customers> getCustomers(){
+        ArrayList<Customers> custList = new ArrayList<>();
+        Customers customers = new Customers();
+
+        try (Connection conn = JDBCHelper.getConnection();
+             Statement st = conn.createStatement();
+             ResultSet rs = st.executeQuery("SELECT * FROM products")) {
+
+            while (rs.next()){
+                //Esto se deberia pasar al cui
+                System.out.println("ID: " + rs.getInt("customer_id"));
+                System.out.println("Nombre: " + rs.getString("customer_name"));
+                //-----------
+                customers.setCustomer_id(rs.getInt("customer_id"));
+                customers.setCustomer_name(rs.getString("customer_name"));
+                customers.setGender(rs.getString("gender"));
+                customers.setAge(rs.getInt("age"));
+                customers.setHome_address(rs.getString("home_address"));
+                customers.setZip_code(rs.getInt("zip_code"));
+                customers.setCustomer_name(rs.getString("city"));
+                customers.setCustomer_name(rs.getString("state"));
+                customers.setCustomer_name(rs.getString("country"));
+
+                custList.add(customers);
+            }
+
+        }catch (SQLException e ){
+            e.printStackTrace();
+        }
+        return custList;
+    }
+
 }

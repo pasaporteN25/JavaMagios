@@ -1,21 +1,44 @@
 package entities;
 
 public class Customers {
-    String customer_id;
+    Integer customer_id;
     String customer_name;
     String gender;
-    String age;
+    Integer age;
     String home_address;
-    String zip_code;
+    Integer zip_code;
     String city;
     String state;
     String country;
 
-    public String getCustomer_id() {
+    public Customers(){}
+
+    public Customers(
+            String customer_name,
+            String newGender,
+            Integer newAge,
+            String newHome_address,
+            Integer newZip_code,
+            String newCity,
+            String newState,
+            String newCountry
+    ){
+        //si funciona lo expandimos!
+        this.customer_name=customer_name;
+        gender=newGender;
+        age=newAge;
+        home_address=newHome_address;
+        zip_code=newZip_code;
+        city=newCity;
+        state=newState;
+        country=newCountry;
+    }
+
+    public Integer getCustomer_id() {
         return customer_id;
     }
 
-    public void setCustomer_id(String customer_id) {
+    public void setCustomer_id(Integer customer_id) {
         this.customer_id = customer_id;
     }
 
@@ -35,11 +58,11 @@ public class Customers {
         this.gender = gender;
     }
 
-    public String getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
@@ -51,11 +74,11 @@ public class Customers {
         this.home_address = home_address;
     }
 
-    public String getZip_code() {
+    public Integer getZip_code() {
         return zip_code;
     }
 
-    public void setZip_code(String zip_code) {
+    public void setZip_code(Integer zip_code) {
         this.zip_code = zip_code;
     }
 
