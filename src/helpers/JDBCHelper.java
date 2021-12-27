@@ -3,7 +3,6 @@ package helpers;
 import dao.JDBCImp;
 import entities.Customers;
 import entities.Products;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,13 +13,13 @@ public class JDBCHelper {
 
     public ArrayList<Products> getProducts() {
         ArrayList<Products> prodList = new ArrayList<>();
-        Products products = new Products();
 
         try (Connection conn = JDBCImp.getConnection();
              Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery("SELECT * FROM products")) {
 
             while (rs.next()) {
+                Products products = new Products();
                 products.setProduct_ID(rs.getInt("product_ID"));
                 products.setProduct_type(rs.getString("product_type"));
                 products.setProduct_name(rs.getString("product_name"));
@@ -30,6 +29,7 @@ public class JDBCHelper {
                 products.setQuantity(rs.getInt("quantity"));
                 products.setDescription(rs.getString("description"));
                 prodList.add(products);
+                //System.out.println("ABER: "+rs.getString("product_name")+rs.getString("colour"));
             }
 
         } catch (SQLException e) {
@@ -121,8 +121,16 @@ public class JDBCHelper {
         }
     }
 
-    public void deleteProduct() {
-
+    public void deleteProduct(Integer prod_id) {
+        String sqlDelete = "DELETE FROM 'products' WHERE 'product_id' = "+prod_id;
+        try(Connection conn = JDBCImp.getConnection();
+            Statement st = conn.createStatement()){
+            st.executeUpdate(sqlDelete);
+            System.out.println("Se elimino correctamente");
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.out.println("Fallo al eliminar");
+        }
     }
 
     //customer_id,customer_name,gender,age,home_address,zip_code,city,state,country

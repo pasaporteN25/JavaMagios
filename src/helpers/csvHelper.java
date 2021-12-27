@@ -13,10 +13,26 @@ import java.util.Arrays;
 
 public class csvHelper {
 
+    public ArrayList<ArrayList<String>> csvReader() {
 
-    public ArrayList<Object> csvReader(String finalPath) {
+        ArrayList<ArrayList<String>> datos = new ArrayList<>();
+        Path path = Paths.get("C:/Users/Lucas/Downloads/products.csv");
+        try {
+            BufferedReader br = Files.newBufferedReader(path);
+            String linea;
 
-        //ArrayList<ArrayList<String>> datos = new ArrayList<ArrayList<String>>();
+            while ((linea = br.readLine()) != null) {
+                String[] datosDeLinea = linea.split(",");
+                ArrayList<String> datosTemp = new ArrayList<>(Arrays.asList(datosDeLinea));
+                datos.add(datosTemp);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return datos;
+    }
+
+    public ArrayList<Object> csvReaderAndConverter(String finalPath) {
 
         ArrayList<Object> result = new ArrayList<>();
 
@@ -72,12 +88,17 @@ public class csvHelper {
                     }
                 }
             }
+            System.out.println("Entrada finalizada!");
+
         } catch (IOException e) {
             e.printStackTrace();
         }
         //System.out.println(datos);
 
         return result;
+    }
+
+    public void csvWriter(){
 
     }
 }

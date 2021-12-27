@@ -27,14 +27,20 @@ public class randomBuyers {
 
         ConnectionUrlParser.Pair<Integer,Integer> randomPair = pedidoRopa();
         JDBCHelper sql = new JDBCHelper();
-        System.out.println(randomPair.right);
-        ArrayList<Products> product = sql.searchProducts(randomPair.right);
-        System.out.println("Nuevo pedido de "+randomPair.left+" "+product.get(0).getProduct_name());
+        ArrayList<Products> products = sql.searchProducts(randomPair.right);
+        Products product = products.get(0);
 
-        if(randomPair.left > product.get(0).getQuantity()){
+        System.out.println("Nuevo pedido de "+randomPair.left+" "+product.getProduct_name());
+        System.out.println("Stock actual: "+product.getQuantity());
+
+        if(randomPair.left > product.getQuantity()){
             System.out.println("No contamos con tantos ejemplares. Pruebe de nuevo...");
         }else {
-            System.out.println("Total: "+product.get(0).getPrice()*randomPair.left);
+            sql.updateProduct("quantity",(product.getQuantity()-randomPair.left),product.getProduct_ID());
+            System.out.println("Total a pagar: "+product.getPrice()*randomPair.left);
+            ArrayList<Products> newProducts = sql.searchProducts(randomPair.right);
+            System.out.println("Nuevo stock: "+newProducts.get(0).getQuantity());
+            System.out.println("---------------------------------");
         }
     }
 

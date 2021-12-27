@@ -1,3 +1,4 @@
+import com.mysql.cj.conf.ConnectionUrlParser;
 import helpers.JDBCHelper;
 import entities.Customers;
 import entities.Products;
@@ -13,29 +14,49 @@ public class cui {
     JDBCHelper sqlHelper = new JDBCHelper();
 
     public Boolean welcomeScreen() {
-        Boolean salir = false;
+        delayInit();
+        boolean salir = false;
+        System.out.println("-------------------------------");
         System.out.println("Bienvenido a su gestor de Stock");
         System.out.println("-------------------------------");
         System.out.println("1. Consulta DB");
         System.out.println("2. Consulta csv");
         System.out.println("3. Control de Stock");
         System.out.println("4. Resumen del dia");
+        //Guardar datos de pedidos y de cambio de stock para mostrar en resumen!
         System.out.println("5. Esperar pedidos...");
-        //Sleep 30s y preguntar de nuevo que hacer...
         System.out.println("6. Salir");
         option = in.nextLine();
 
         switch (option) {
             case "1" -> dbScreen();
             case "2" -> csvScreen();
-            case "3" -> System.out.println("Espera...");
-            case "4" -> System.out.println("Segui esperando..");
+            case "3" -> {
+                ArrayList<Products> prodToStock = sqlHelper.getProducts();
+                for (Products prod: prodToStock){
+                    System.out.println("Item: "+prod.getProduct_name());
+                    System.out.println("Stock: "+prod.getQuantity()+"\n");
+                }
+            }
+            case "4" -> {
+                boolean hayStock=false;
+                ArrayList<Products> prodToStock = sqlHelper.getProducts();
+                for (Products prod : prodToStock) {
+                    //Esto debo ver como manejarlo mejor
+                    if (prod.getQuantity().equals(0)) {
+                        System.out.println("Hay que reponer "+prod.getProduct_name());
+                    } else {
+                        hayStock = true;
+                    }
+                }
+                if(hayStock) System.out.println("Hay Stock de todos los productos.");
+                System.out.println("\n");
+            }
             case "5" -> {
                 for (int i = 0; i < 3; i++) {
                     randomBuyers randombuyer = new randomBuyers();
                     randombuyer.verifyBuy();
-                    //Aca cuando entra un pedido hay que modificar el stock de una!! E informarlo
-
+                    //Agregar a sales en db
                     try {
                         Thread.sleep(3000);
                     } catch (InterruptedException e) {
@@ -45,12 +66,16 @@ public class cui {
                 welcomeScreen();
             }
             case "6" -> salir = true;
-            default -> throw new IllegalStateException("Unexpected value: " + option);
+            default ->{
+                System.out.println("Opcion no encontrada, intente nuevamente. ");
+                welcomeScreen();
+            }
         }
         return salir;
     }
 
     public void dbScreen() {
+        delayInit();
         System.out.println("DB Controller Room");
         System.out.println("------------------");
         System.out.println("1. Productos");
@@ -68,6 +93,7 @@ public class cui {
 
     //Esta quiza se puede mejorar uniendola con prod
     public void dbCustScreen() {
+        delayInit();
         System.out.println("DB Controller");
         System.out.println("-------------");
         System.out.println("1. Ver clientes");
@@ -82,9 +108,7 @@ public class cui {
             case "1" -> {
                 ArrayList<Customers> customersList = sqlHelper.getCustomers();
 
-
                 for (Customers customer : customersList) {
-
                     System.out.println("ID: " + customer.getCustomer_id() +
                             ", Nombre: " + customer.getCustomer_name() +
                             ", Genero: " + customer.getGender() +
@@ -145,6 +169,7 @@ public class cui {
     }
 
     public void dbProdScreen() {
+        delayInit();
         System.out.println("DB Controller");
         System.out.println("-------------");
         System.out.println("1. Ver productos y stock");
@@ -223,9 +248,9 @@ public class cui {
             }
             case "4" -> System.out.println("Espera...");//modificar
             case "5" -> {
-                //Esta todavia no hace nada
-                sqlHelper.deleteProduct();
-                System.out.println("Segui esperando..");
+                //Esta todavia no esta probado
+                Integer prodId = in.nextInt();
+                sqlHelper.deleteProduct(prodId);
             }
             case "6" -> dbScreen();
             default -> throw new IllegalStateException("Unexpected value: " + option);
@@ -233,6 +258,7 @@ public class cui {
     }
 
     public void csvScreen() {
+        delayInit();
         csvHelper csvhelper = new csvHelper();
 
         System.out.println("CSV Center");
@@ -246,10 +272,14 @@ public class cui {
 
         option = in.nextLine();
         switch (option){
+            case "1" -> {
+                ArrayList<ArrayList<String>> csvData = csvhelper.csvReader();
+                System.out.println(csvData);
+            }
             case "4" ->{
                 System.out.println("Tipos admitidos: 'customers' y 'products'");
                 String pathFile = in.nextLine();
-                ArrayList<Object> listToDb = csvhelper.csvReader(pathFile);
+                ArrayList<Object> listToDb = csvhelper.csvReaderAndConverter(pathFile);
 
                 if(pathFile.equals("products")){
                     ArrayList<Products> toAddProducts = new ArrayList<>();
@@ -268,6 +298,14 @@ public class cui {
                 }
             }
             case "5" -> welcomeScreen();
+        }
+    }
+
+    private void delayInit(){
+        try{
+            Thread.sleep(1000);
+        }catch (InterruptedException e){
+            e.printStackTrace();
         }
     }
 

@@ -2,6 +2,7 @@ package entities;
 
 public class Orders {
     String order_id;
+    //falta el id del producto!
     String customer_id;
     String payment;
     String order_date;
