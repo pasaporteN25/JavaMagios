@@ -12,19 +12,12 @@ public class randomBuyers {
     //Esta pasa a privado en breve
     public ConnectionUrlParser.Pair<Integer, Integer> pedidoRopa(){
 
-        //Este tiene que hacer una verificacion de stock!
-        //Y aceptar o rechazar el pedido de acuerdo a eso
-        //Pero no aca, aca solo se implementa, pero eso se tiene que hacer en un controlador central??
-        //Afuera también imprimo cuanto cuesta todx el pedido
         //Calcular también cuanto stock queda y cuanto hay que reponer para volver al estado inicial
         //Total del pedido:
         int totalRand = (int) (Math.random() * ((30-1) +1));
 
-        //Id del pedido:
+        //Id del producto requerido:
         int idRand = (int) (Math.random() * (1259-1)+1);
-
-        //El segundo parametro pasa a ser un objeto de tipo Product
-        //probar si el get no toma 1...
 
         return new ConnectionUrlParser.Pair<>(totalRand,idRand);
     }
@@ -37,7 +30,6 @@ public class randomBuyers {
         System.out.println(randomPair.right);
         ArrayList<Products> product = sql.searchProducts(randomPair.right);
         System.out.println("Nuevo pedido de "+randomPair.left+" "+product.get(0).getProduct_name());
-        //System.out.println(product.get(0).getProduct_ID());
 
         if(randomPair.left > product.get(0).getQuantity()){
             System.out.println("No contamos con tantos ejemplares. Pruebe de nuevo...");
