@@ -37,7 +37,6 @@ public class JDBCaoImp {
                 prodList.add(products);
             }
 
-
         }catch (SQLException e ){
             e.printStackTrace();
         }
@@ -50,7 +49,8 @@ public class JDBCaoImp {
             Statement st = conn.createStatement()){
 
             for (Products product : dataIn){
-                String sql= "INSERT INTO products(" +
+                String sql;
+                sql = "INSERT INTO products(" +
                         "product_type,product_name,size,colour,price,quantity,description" +
                         ") VALUES ('" +
                         product.getProduct_type() + "', '" +
@@ -63,6 +63,7 @@ public class JDBCaoImp {
 
                 st.executeUpdate(sql);
                 System.out.println("Insertado con exito!");
+                conn.close();
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -95,7 +96,6 @@ public class JDBCaoImp {
             if(pList.size() != 0){
                 System.out.println("Coincidencias en la busqueda: "+pList.size());
             }
-
         }catch (SQLException e ){
             e.printStackTrace();
         }
