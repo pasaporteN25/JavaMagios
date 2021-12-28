@@ -5,12 +5,8 @@ import entities.Products;
 import java.util.ArrayList;
 
 public class randomBuyers {
-    //log.info log.error
 
-    //Deberia elegir un numero de id, sacarlo del csv y enviarlo a la db
-    //O minimamente devolverlo al main y que ahi se mande a la db
-    //Esta pasa a privado en breve
-    public ConnectionUrlParser.Pair<Integer, Integer> pedidoRopa(){
+    private ConnectionUrlParser.Pair<Integer, Integer> pedidoRopa(){
 
         //Calcular también cuanto stock queda y cuanto hay que reponer para volver al estado inicial
         //Total del pedido:
@@ -22,7 +18,7 @@ public class randomBuyers {
         return new ConnectionUrlParser.Pair<>(totalRand,idRand);
     }
 
-    //Tengo que crear un nuevo objeto de respuesta para el cliente, la idea seria escupirlo en json...
+    //Tengo que crear un nuevo objeto de respuesta para el cliente, la idea seria devolverlo en json o csv
     public void verifyBuy(){
 
         ConnectionUrlParser.Pair<Integer,Integer> randomPair = pedidoRopa();
@@ -42,6 +38,8 @@ public class randomBuyers {
             System.out.println("Nuevo stock: "+newProducts.get(0).getQuantity());
             System.out.println("---------------------------------");
         }
+        //modificar esto
+        //return product;
     }
 
 }
